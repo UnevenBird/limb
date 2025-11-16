@@ -1,3 +1,6 @@
 [submodule "external/luaJIT"]
 	path = external/luaJIT
 	url = https://github.com/WohlSoft/LuaJIT.git
+[submodule "external/RGFW"]
+	path = external/RGFW
+	url = https://github.com/ColleagueRiley/RGFW.git

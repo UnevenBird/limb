@@ -6,5 +6,5 @@ cmake --build . --config Release
 ```
 or run 
 ```
-./tools/win/build.sh
+./tools/build.sh
 ```

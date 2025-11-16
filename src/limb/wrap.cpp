@@ -1,18 +1,9 @@
+#include "limb/wrap.h"
 #include "common/config.h"
-#include "common/luax.h"
-
-enum class APP_STATE {
-	RUN = 0,
-	QUIT = 1,
-};
 
 static const char boot_lua[] =
-#include "boot.lua"
+#include "scripts/boot.lua"
 ;
-
-extern "C" {
-	extern int luaopen_limb_boot(lua_State*);
-}
 
 static const luaL_Reg modules[] = {
 	{ "limb.boot", luaopen_limb_boot },
@@ -40,28 +31,30 @@ static const luaL_Reg functions[] = {
 	{ nullptr, nullptr }
 };
 
-extern "C" int luaopen_limb(lua_State *L) {
+extern "C" {
+
+int luaopen_limb(lua_State *L) {
 	for (int i = 0; modules[i].name != nullptr; i++) {
 		luax_preloadlib(L, modules[i].func, modules[i].name);
 	}
 
 	luax_premakeglobal(L, "limb");
-
-	lua_pushstring(L, "LIMB 0.1");
-	lua_setfield(L, -2, "_VERSION");
-
 	luax_setfuncs(L, functions);
 	return 1;
 }
 
-extern "C" int luaopen_limb_boot(lua_State *L) {
+int luaopen_limb_boot(lua_State *L) {
 	if (luaL_loadbuffer(L, boot_lua, sizeof(boot_lua), "=[limb \"boot.lua\"]") == 0)
 		lua_call(L, 0, 1);
 
 	return 1;
 }
 
-static APP_STATE runlimb(APP_STATE &retval) {
+} // extern "C"
+
+namespace limb {
+
+APP_STATE runlimb(APP_STATE &retval) {
 	lua_State* L = luaL_newstate();
 	luaL_openlibs(L);
 
@@ -98,11 +91,4 @@ static APP_STATE runlimb(APP_STATE &retval) {
 	return retval;
 }
 
-int main() {
-	APP_STATE retval = APP_STATE::QUIT;
-	do {
-		retval = runlimb(retval);
-	} while (retval != APP_STATE::QUIT);
-
-	return 0;
-}
+} // namespace limb
