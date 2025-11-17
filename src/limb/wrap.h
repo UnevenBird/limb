@@ -6,6 +6,7 @@
 extern "C" {
 int luaopen_limb(lua_State *L);
 int luaopen_limb_boot(lua_State *L);
+extern int luaopen_limb_window(lua_State *L);
 }
 
 namespace limb {

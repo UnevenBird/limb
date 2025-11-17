@@ -39,3 +39,9 @@ int luax_resume(lua_State* L, int nargs, int* nres) {
 	return lua_resume(L, nargs);
 #endif
 }
+
+std::string luax_checkstring(lua_State* L, int idx) {
+	size_t len;
+	const char *str = luaL_checklstring(L, idx, &len);
+	return std::string(str, len);
+}

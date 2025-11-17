@@ -6,6 +6,9 @@ local limb = require('limb')
 function limb.boot()
 	log("LIMB", string.format("v%d.%d", limb.getVersion()))
 	log("OS: ", limb.getOS())
+
+	limb.window = require "limb.window"
+	limb.window.create('Untitled', 1280, 720)
 end
 
 function limb.run()
