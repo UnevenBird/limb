@@ -7,15 +7,26 @@ function limb.boot()
 	log("LIMB", string.format("v%d.%d", limb.getVersion()))
 	log("OS: ", limb.getOS())
 
-	limb.window = require "limb.window"
+	-- require modules
+	for k,v in ipairs {
+		"window",
+		"timer",
+	} do
+		limb[v] = require("limb." .. v)
+	end
+
 	limb.window.create('Untitled', 1280, 720)
+	limb.timer.create()
 end
 
 function limb.run()
 	if limb.load then limb.load() end
 
+	limb.timer.step()
+
 	return function()
-		if limb.update then limb.update() end
+		local dt = limb.timer.step()
+		if limb.update then limb.update(dt) end
 		if limb.render then limb.render() end
 	end
 end

@@ -28,6 +28,11 @@ set(LIMB_WINDOW
 	src/window/wrap.cpp
 )
 
+set(LIMB_TIMER
+	src/timer/timer.cpp
+	src/timer/wrap.cpp
+)
+
 set(LIMB
 	src/limb/limb.cpp
 	src/limb/wrap.cpp
@@ -36,6 +41,7 @@ set(LIMB
 add_executable(${PROJECT_NAME}
 	${LIMB_COMMON}
 	${LIMB_WINDOW}
+	${LIMB_TIMER}
 	${LIMB}
 )
 
