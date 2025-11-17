@@ -1,8 +1,8 @@
 #ifndef LIMB_WINDOW_H
 #define LIMB_WINDOW_H
-
 #define RGFW_IMPORT
 #define RGFW_OPENGL
+
 #include "glad/glad.h"
 #include "RGFW.h"
 
@@ -15,6 +15,8 @@ public:
 	Window(std::string &title, int width, int height);
 	~Window();
 	bool Init();
+	void SwapBuffers();
+
 private:
 	std::string m_title;
 	int m_width, m_height;

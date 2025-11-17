@@ -20,6 +20,7 @@ target_include_directories(glad PUBLIC
 )
 
 set(LIMB_COMMON
+	src/common/color.cpp
 	src/common/luax.cpp
 )
 
@@ -33,6 +34,11 @@ set(LIMB_TIMER
 	src/timer/wrap.cpp
 )
 
+set(LIMB_GPATHICS
+	src/graphics/graphics.cpp
+	src/graphics/wrap.cpp
+)
+
 set(LIMB
 	src/limb/limb.cpp
 	src/limb/wrap.cpp
@@ -42,6 +48,7 @@ add_executable(${PROJECT_NAME}
 	${LIMB_COMMON}
 	${LIMB_WINDOW}
 	${LIMB_TIMER}
+	${LIMB_GPATHICS}
 	${LIMB}
 )
 

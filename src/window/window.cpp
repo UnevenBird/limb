@@ -42,4 +42,8 @@ bool Window::Init() {
 	return true;
 }
 
+void Window::SwapBuffers() {
+	RGFW_window_swapBuffers_OpenGL(m_window);
+}
+
 } // namespace limb

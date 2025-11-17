@@ -9,6 +9,7 @@ static const luaL_Reg modules[] = {
 	{ "limb.boot", luaopen_limb_boot },
 	{ "limb.window", luaopen_limb_window },
 	{ "limb.timer", luaopen_limb_timer },
+	{ "limb.graphics", luaopen_limb_graphics },
 	{ nullptr, nullptr }
 };
 

@@ -11,6 +11,7 @@ function limb.boot()
 	for k,v in ipairs {
 		"window",
 		"timer",
+		"graphics",
 	} do
 		limb[v] = require("limb." .. v)
 	end
@@ -22,12 +23,16 @@ end
 function limb.run()
 	if limb.load then limb.load() end
 
+	limb.graphics.setBackgroundColor(0x212121)
 	limb.timer.step()
 
 	return function()
 		local dt = limb.timer.step()
 		if limb.update then limb.update(dt) end
+
+		limb.graphics.clear()
 		if limb.render then limb.render() end
+		limb.graphics.present()
 	end
 end
 
