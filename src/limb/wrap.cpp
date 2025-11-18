@@ -9,6 +9,7 @@ static const luaL_Reg modules[] = {
 	{ "limb.boot", luaopen_limb_boot },
 	{ "limb.window", luaopen_limb_window },
 	{ "limb.timer", luaopen_limb_timer },
+	{ "limb.event", luaopen_limb_event },
 	{ "limb.graphics", luaopen_limb_graphics },
 	{ nullptr, nullptr }
 };
@@ -89,6 +90,17 @@ APP_STATE runlimb(APP_STATE &retval) {
 	if (!lua_isnoneornil(L, stackpos) && lua_isnumber(L, stackpos)) {
 		retval = (APP_STATE)lua_tonumber(L, stackpos);
 	}
+
+	lua_getglobal(L, "limb");
+	lua_getfield(L, -1, "window");
+	lua_getfield(L, -1, "close");
+
+	if (lua_pcall(L, 0, 0, 0) != LUA_OK) {
+		printf("Error: %s\n", lua_tostring(L, -1));
+		lua_pop(L, 1);
+	}
+
+	lua_pop(L, 2);
 
 	lua_close(L);
 	return retval;

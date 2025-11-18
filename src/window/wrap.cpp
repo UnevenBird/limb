@@ -20,8 +20,10 @@ static int w_close(lua_State *L) {
 	if (limb::window) {
 		delete limb::window;
 		limb::window = nullptr;
+		return 0;
+	} else {
+		return luaL_error(L, "Failed to close window.");
 	}
-	return 0;
 }
 
 static const luaL_Reg functions[] = {

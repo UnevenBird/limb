@@ -46,4 +46,8 @@ void Window::SwapBuffers() {
 	RGFW_window_swapBuffers_OpenGL(m_window);
 }
 
+RGFW_window*  Window::GetHandler() {
+	return m_window;
+}
+
 } // namespace limb

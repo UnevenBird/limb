@@ -16,6 +16,7 @@ public:
 	~Window();
 	bool Init();
 	void SwapBuffers();
+	RGFW_window* GetHandler();
 
 private:
 	std::string m_title;
