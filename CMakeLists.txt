@@ -60,6 +60,7 @@ add_executable(${PROJECT_NAME}
 
 target_include_directories(${PROJECT_NAME} PRIVATE
 	"${CMAKE_SOURCE_DIR}/src"
+	"${CMAKE_SOURCE_DIR}/external/expected/include"
 	"${CMAKE_SOURCE_DIR}/external/LuaJIT/src"
 )
 
