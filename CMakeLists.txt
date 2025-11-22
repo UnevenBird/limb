@@ -64,9 +64,11 @@ add_executable(${PROJECT_NAME}
 	${LIMB}
 )
 
+target_compile_definitions(${PROJECT_NAME} PRIVATE FMT_HEADER_ONLY)
 target_include_directories(${PROJECT_NAME} PRIVATE
 	"${CMAKE_SOURCE_DIR}/src"
 	"${CMAKE_SOURCE_DIR}/external/expected/include"
+	"${CMAKE_SOURCE_DIR}/external/fmt/include"
 	"${CMAKE_SOURCE_DIR}/external/LuaJIT/src"
 )
 
