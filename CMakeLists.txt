@@ -44,6 +44,11 @@ set(LIMB_GPATHICS
 	src/graphics/wrap.cpp
 )
 
+set(LIMB_FILESYSTEM
+	src/filesystem/filesystem.cpp
+	src/filesystem/wrap.cpp
+)
+
 set(LIMB
 	src/limb/limb.cpp
 	src/limb/wrap.cpp
@@ -55,6 +60,7 @@ add_executable(${PROJECT_NAME}
 	${LIMB_TIMER}
 	${LIMB_EVENT}
 	${LIMB_GPATHICS}
+	${LIMB_FILESYSTEM}
 	${LIMB}
 )
 

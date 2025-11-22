@@ -10,6 +10,7 @@ extern int luaopen_limb_window(lua_State *L);
 extern int luaopen_limb_timer(lua_State *L);
 extern int luaopen_limb_event(lua_State *L);
 extern int luaopen_limb_graphics(lua_State *L);
+extern int luaopen_limb_filesystem(lua_State *L);
 }
 
 namespace limb {

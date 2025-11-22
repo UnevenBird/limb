@@ -38,8 +38,8 @@ static int w_poll(lua_State *L) {
 		case limb::EventType::MouseMoved:
 			lua_pushinteger(L, event.x);
 			lua_pushinteger(L, event.y);
-			lua_pushinteger(L, event.dx);
-			lua_pushinteger(L, event.dy);
+			lua_pushnumber(L, event.dx);
+			lua_pushnumber(L, event.dy);
 			return 5;
 		case limb::EventType::MouseWheel:
 			lua_pushinteger(L, event.dx);

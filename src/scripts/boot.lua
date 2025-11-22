@@ -24,12 +24,20 @@ function limb.boot()
 		"timer",
 		"event",
 		"graphics",
+		"filesystem",
 	} do
 		limb[v] = require("limb." .. v)
 	end
 
 	limb.window.create('Untitled', 1280, 720)
 	limb.timer.create()
+
+	local entrypoint = "main.lua"
+	local entrypoint_found = limb.filesystem.exists(entrypoint)
+	limb.log(string.format('entry point "%s": %s', entrypoint, entrypoint_found and 'found' or 'not found'))
+	if entrypoint_found then
+		require(entrypoint:gsub("%.lua$", ""))
+	end
 end
 
 function limb.run()
