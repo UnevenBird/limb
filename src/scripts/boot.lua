@@ -1,25 +1,13 @@
 R"luastring"--(
 
-local print = print
-local limb = require('limb')
-limb.log = function(...) -- tmp logging function
-	local args = {}
-	local i = 1
-	for _,v in ipairs({...}) do
-		if v then
-			args[i] = tostring(v)
-			i=i+1
-		end
-	end
-	print(table.concat(args, " "))
-end
+local limb = require("limb")
 
 function limb.boot()
-	limb.log("LIMB", string.format("v%d.%d", limb.getVersion()))
-	limb.log("OS: ", limb.getOS())
+	limb.logf("LIMB v{}.{}", limb.getVersion())
+	limb.logf("OS: {}", limb.getOS())
 
 	-- require modules
-	for k,v in ipairs {
+	for _,v in ipairs {
 		"window",
 		"timer",
 		"event",
@@ -27,14 +15,15 @@ function limb.boot()
 		"filesystem",
 	} do
 		limb[v] = require("limb." .. v)
+		limb.logf("required module {}", v)
 	end
 
-	limb.window.create('Untitled', 1280, 720)
+	limb.window.create("Untitled", 1280, 720)
 	limb.timer.create()
 
 	local entrypoint = "main.lua"
 	local entrypoint_found = limb.filesystem.exists(entrypoint)
-	limb.log(string.format('entry point "%s": %s', entrypoint, entrypoint_found and 'found' or 'not found'))
+	limb.logf("entry point '{}': {}", entrypoint, entrypoint_found and "found" or "not found")
 	if entrypoint_found then
 		require(entrypoint:gsub("%.lua$", ""))
 	end
@@ -49,7 +38,6 @@ function limb.run()
 	return function()
 		limb.event.pump()
 		for name, a,b,c,d,e,f in limb.event.poll() do
-			limb.log(name, a,b,c,d,e,f)
 			if name == "quit" then
 				return 1
 			end
