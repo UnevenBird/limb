@@ -18,14 +18,29 @@ function limb.boot()
 		limb.logf("required module {}", v)
 	end
 
-	limb.window.create("Untitled", 1280, 720)
+	-- default app configuration
+	local c = {
+		entrypoint = "main.lua",
+		window = {
+			title = "Untitled",
+			width = 1280,
+			height = 720,
+		}
+	}
+
+	local conf_path = "conf.lua"
+	if limb.filesystem.exists(conf_path) then
+		require(limb.filesystem.removeExtension(conf_path))
+		limb.conf(c)
+	end
+
+	limb.window.create(c.window.title, c.window.width, c.window.height)
 	limb.timer.create()
 
-	local entrypoint = "main.lua"
-	local entrypoint_found = limb.filesystem.exists(entrypoint)
-	limb.logf("entry point '{}': {}", entrypoint, entrypoint_found and "found" or "not found")
+	local entrypoint_found = limb.filesystem.exists(c.entrypoint)
+	limb.logf("entry point '{}': {}", c.entrypoint, entrypoint_found and "found" or "not found")
 	if entrypoint_found then
-		require(entrypoint:gsub("%.lua$", ""))
+		require(limb.filesystem.removeExtension(c.entrypoint))
 	end
 end
 

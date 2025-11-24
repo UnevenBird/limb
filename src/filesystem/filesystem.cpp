@@ -49,6 +49,12 @@ tl::expected<std::string, std::string> NormalizePath(const std::string& str_path
 	return path.lexically_normal().string();
 }
 
+tl::expected<std::string, std::string> RemoveExtension(const std::string& str_path) {
+	if (str_path.empty()) return tl::unexpected<std::string>("invalid path provided.");
+	fs::path path(str_path);
+	return path.replace_extension("").string();
+}
+
 std::string GetCurrentPath() {
 	return fs::current_path().string();
 }
