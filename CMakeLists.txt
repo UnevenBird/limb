@@ -40,7 +40,9 @@ set(LIMB_EVENT
 )
 
 set(LIMB_GPATHICS
+	src/graphics/texture.cpp
 	src/graphics/graphics.cpp
+	src/graphics/wrap_texture.cpp
 	src/graphics/wrap.cpp
 )
 
@@ -69,6 +71,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 	"${CMAKE_SOURCE_DIR}/src"
 	"${CMAKE_SOURCE_DIR}/external/expected/include"
 	"${CMAKE_SOURCE_DIR}/external/fmt/include"
+	"${CMAKE_SOURCE_DIR}/external/stb/include"
 	"${CMAKE_SOURCE_DIR}/external/LuaJIT/src"
 )
 

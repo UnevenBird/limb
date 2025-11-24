@@ -2,6 +2,8 @@
 #include "graphics/graphics.h"
 #include "common/color.h"
 
+#include "graphics/wrap_texture.h"
+
 static int w_clear(lua_State* L) {
 	limb::graphics::Clear();
 	return 0;
@@ -34,6 +36,7 @@ static int w_present(lua_State* L) {
 static const luaL_Reg functions[] = {
 	{ "clear", w_clear },
 	{ "setBackgroundColor", w_setBackgroundColor },
+	{ "newTexture", w_newTexture },
 	{ "HSVtoRGB", w_HSVtoRGB },
 	{ "present", w_present },
 	{ nullptr, nullptr }
