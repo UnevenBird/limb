@@ -23,7 +23,7 @@ fi
 cd build || exit 1
 
 echo -e "${YELLOW}[2/3] Generating CMake project...${NC}"
-if cmake .. -G "Visual Studio 17 2022" -A x64; then
+if cmake .. -G "Visual Studio 18 2026" -A x64; then
 	echo -e "${GREEN}CMake generation successful${NC}"
 else
 	echo -e "${RED}CMake generation failed${NC}"
