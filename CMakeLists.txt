@@ -77,6 +77,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 	"${CMAKE_SOURCE_DIR}/external/fmt/include"
 	"${CMAKE_SOURCE_DIR}/external/stb/include"
 	"${CMAKE_SOURCE_DIR}/external/LuaJIT/src"
+	"${CMAKE_SOURCE_DIR}/external/glm"
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
