@@ -13,6 +13,7 @@ void SetBackgroundColor(const Color& color) {
 }
 
 void Present() {
+	if (!limb::window) return;
 	limb::window->SwapBuffers();
 }
 

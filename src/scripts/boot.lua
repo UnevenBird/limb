@@ -23,6 +23,7 @@ function limb.boot()
 		entrypoint = "main.lua",
 		window = {
 			title = "Untitled",
+			visible = true,
 			width = 1280,
 			height = 720,
 		}
@@ -34,7 +35,12 @@ function limb.boot()
 		limb.conf(c)
 	end
 
-	limb.window.create(c.window.title, c.window.width, c.window.height)
+	if c.window then
+		limb.window.create(c.window.title, c.window.width, c.window.height)
+		limb.window.setVisible(c.window.visible)
+		limb.logf("Window is {}", limb.window.isVisible() and "visible" or "hidden")
+	end
+
 	limb.timer.create()
 
 	local entrypoint_found = limb.filesystem.exists(c.entrypoint)
@@ -52,7 +58,7 @@ function limb.run()
 
 	return function()
 		limb.event.pump()
-		for name, a,b,c,d,e,f in limb.event.poll() do
+		for name, a,b,c,d in limb.event.poll() do
 			if name == "quit" then
 				return 1
 			end

@@ -2,12 +2,12 @@
 
 namespace limb {
 
-Window::Window(std::string &title, int width, int height)
+Window::Window(const std::string &title, int width, int height)
 	: m_hints(nullptr)
 	, m_title(title)
 	, m_width(width)
 	, m_height(height)
-	, m_flags(RGFW_windowOpenGL | RGFW_windowCenter)
+	, m_flags(RGFW_windowOpenGL | RGFW_windowCenter | RGFW_windowHide)
 {}
 
 Window::~Window() {
@@ -37,16 +37,31 @@ bool Window::Init() {
 		return false;
 	}
 
-	if (RGFW_window_isHidden(m_window)) RGFW_window_show(m_window);
-
 	return true;
+}
+
+void Window::SetVisible(bool visible) {
+	if (visible) RGFW_window_show(m_window);
+	else RGFW_window_hide(m_window);
+}
+
+void Window::SetTitle(const std::string &title) {
+	m_title = title;
+	RGFW_window_setName(m_window, m_title.c_str());
 }
 
 void Window::SwapBuffers() {
 	RGFW_window_swapBuffers_OpenGL(m_window);
 }
 
-RGFW_window*  Window::GetHandler() {
+bool Window::IsVisible() {
+	if (!m_window)
+		return false;
+
+	return !RGFW_window_isHidden(m_window);
+}
+
+RGFW_window* Window::GetHandler() {
 	return m_window;
 }
 

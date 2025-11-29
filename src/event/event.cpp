@@ -3,6 +3,7 @@
 namespace limb {
 
 void PumpEvents() {
+	if (!limb::window) return;
 	event_queue.clear();
 
 	auto* window = limb::window->GetHandler();

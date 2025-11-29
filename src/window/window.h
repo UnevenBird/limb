@@ -12,10 +12,13 @@ namespace limb {
 
 class Window {
 public:
-	Window(std::string &title, int width, int height);
+	Window(const std::string &title, int width, int height);
 	~Window();
 	bool Init();
+	void SetVisible(bool visible);
+	void SetTitle(const std::string &title);
 	void SwapBuffers();
+	bool IsVisible();
 	RGFW_window* GetHandler();
 
 private:
