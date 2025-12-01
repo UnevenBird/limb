@@ -29,8 +29,6 @@ private:
 	RGFW_windowFlags m_flags;
 };
 
-inline Window* window = nullptr;
-
 } // namespace limb
 
 #endif // LIMB_WINDOW_H

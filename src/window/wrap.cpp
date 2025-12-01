@@ -1,56 +1,54 @@
+#include "limb/limb.h"
 #include "window/wrap.h"
 #include "window/window.h"
 
-static int w_create(lua_State *L) {
-	if (limb::window != nullptr) {
+static int w_init(lua_State *L) {
+	if (limb::app::HasWindow()) {
 		return luaL_error(L, "window already exist!");
 	}
 
 	std::string title = luax_checkstring(L, 1);
 	int width = luaL_checkinteger(L, 2);
 	int height = luaL_checkinteger(L, 3);
-	limb::window = new limb::Window(title, width, height);
 
-	if (!limb::window->Init()) {
-		delete limb::window;
-		limb::window = nullptr;
-		return luaL_error(L, "Failed to initialize window.");
+	auto result = limb::app::InitWindow(title, width, height);
+	if (!result) {
+		return luaL_error(L, result.error().c_str());
 	}
-
 	return 0;
 }
 
 static int w_setVisible(lua_State *L) {
 	bool state = lua_toboolean(L, 1);
-	limb::window->SetVisible(state);
+	limb::app::window->SetVisible(state);
 	return 0;
 }
 
 static int w_close(lua_State *L) {
-	if (limb::window) {
-		delete limb::window;
-		limb::window = nullptr;
-		return 0;
-	} else {
+	if (!limb::app::HasWindow()) {
 		return luaL_error(L, "Failed to close window.");
 	}
+
+	delete limb::app::window;
+	limb::app::window = nullptr;
+	return 0;
 }
 
 static int w_opened(lua_State *L) {
-	lua_pushboolean(L, limb::window != nullptr);
+	lua_pushboolean(L, limb::app::window != nullptr);
 	return 1;
 }
 
 static int w_setTitle(lua_State *L) {
 	std::string title = luax_checkstring(L, 1);
-	limb::window-> SetTitle(title);
+	limb::app::window-> SetTitle(title);
 	return 0;
 }
 
 static int w_isVisible(lua_State *L) {
 	bool visible = false;
-	if (limb::window) {
-		visible = limb::window->IsVisible();
+	if (limb::app::HasWindow()) {
+		visible = limb::app::window->IsVisible();
 	}
 
 	lua_pushboolean(L, visible);
@@ -58,7 +56,7 @@ static int w_isVisible(lua_State *L) {
 }
 
 static const luaL_Reg functions[] = {
-	{ "create", w_create },
+	{ "init", w_init },
 	{ "close", w_close },
 	{ "opened", w_opened },
 	{ "setTitle", w_setTitle },

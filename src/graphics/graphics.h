@@ -3,7 +3,6 @@
 
 #include "glad/glad.h"
 #include "common/color.h"
-#include "window/window.h"
 
 namespace limb {
 namespace graphics {

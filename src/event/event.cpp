@@ -1,12 +1,13 @@
+#include "limb/limb.h"
 #include "event/event.h"
 
 namespace limb {
 
 void PumpEvents() {
-	if (!limb::window) return;
+	if (!limb::app::HasWindow()) return;
 	event_queue.clear();
 
-	auto* window = limb::window->GetHandler();
+	RGFW_window* window = limb::app::window->GetHandler();
 	RGFW_event event;
 	while (RGFW_window_checkEvent(window, &event)) {
 		switch (event.type) {

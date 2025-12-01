@@ -13,15 +13,4 @@ extern int luaopen_limb_graphics(lua_State *L);
 extern int luaopen_limb_filesystem(lua_State *L);
 }
 
-namespace limb {
-
-enum class APP_STATE {
-	RUN = 0,
-	QUIT = 1,
-};
-
-APP_STATE runlimb(APP_STATE &retval);
-
-} // namespace limb
-
 #endif // LIMB_WRAP_H

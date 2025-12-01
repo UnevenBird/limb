@@ -1,3 +1,4 @@
+#include "limb/limb.h"
 #include "graphics/graphics.h"
 
 namespace limb {
@@ -13,8 +14,8 @@ void SetBackgroundColor(const Color& color) {
 }
 
 void Present() {
-	if (!limb::window) return;
-	limb::window->SwapBuffers();
+	if (!limb::app::HasWindow()) return;
+	limb::app::window->SwapBuffers();
 }
 
 } // namespace graphics

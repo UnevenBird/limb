@@ -1,10 +1,43 @@
-#include "limb/wrap.h"
+#include "limb/limb.h"
 
-int main() {
-	limb::APP_STATE retval = limb::APP_STATE::QUIT;
-	do {
-		retval = limb::runlimb(retval);
-	} while (retval != limb::APP_STATE::QUIT);
+namespace limb {
+namespace app {
 
-	return 0;
+void InitTimer() {
+	timer = new Timer();
+	timer->Init();
+}
+
+void Initialize(int argc, char **argv) {
+	InitTimer();
+}
+
+bool HasWindow() {
+	return window != nullptr;
+}
+
+void CloseWindow() {
+	if (!HasWindow()) return;
+	delete window;
+	window = nullptr;
+}
+
+tl::expected<bool, std::string> InitWindow(const std::string &title, int width, int height) {
+	window = new Window(title, width, height);
+	if (!window->Init()) {
+		CloseWindow();
+		return tl::unexpected<std::string>("couldn't initialize window."); // @todo add proper error messages
+	}
+	return true;
+}
+
+void Shutdown() {
+	CloseWindow();
+	if (timer) {
+		delete timer;
+		timer = nullptr;
+	}
+}
+
+}
 }

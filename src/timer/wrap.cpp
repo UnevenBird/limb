@@ -1,37 +1,30 @@
+#include "limb/limb.h"
 #include "timer/wrap.h"
 #include "timer/timer.h"
 
-static int w_create(lua_State *L) {
-	limb::timer = new limb::Timer();
-	limb::timer->Init();
-	return 0;
-}
-
 static int w_step(lua_State* L) {
-	double delta = limb::timer->Step();
+	double delta = limb::app::timer->Step();
 	lua_pushnumber(L, delta);
 	return 1;
 }
 
 static int w_getDelta(lua_State* L) {
-	lua_pushnumber(L, (lua_Number) limb::timer->GetDelta());
+	lua_pushnumber(L, (lua_Number) limb::app::timer->GetDelta());
 	return 1;
 }
 
 static int w_getFPS(lua_State* L) {
-	lua_pushnumber(L, (lua_Integer) limb::timer->GetFPS());
+	lua_pushnumber(L, (lua_Integer) limb::app::timer->GetFPS());
 	return 1;
 }
 
 static int w_getTime(lua_State* L) {
-	lua_pushnumber(L, (lua_Number) limb::timer->GetTime());
+	lua_pushnumber(L, (lua_Number) limb::app::timer->GetTime());
 	return 1;
 }
 
 static const luaL_Reg functions[] = {
-	{ "create", w_create },
 	{ "step", w_step },
-	// { "sleep", w_sleep },
 	{ "getDelta", w_getDelta },
 	{ "getFPS", w_getFPS },
 	{ "getTime", w_getTime },

@@ -2,9 +2,9 @@
 #define LIMB_EVENT_H
 #define RGFW_IMPORT
 
-#include "window/window.h"
 #include <string>
 #include <queue>
+#include "RGFW.h"
 
 namespace limb {
 

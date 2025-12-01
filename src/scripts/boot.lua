@@ -36,12 +36,10 @@ function limb.boot()
 	end
 
 	if c.window then
-		limb.window.create(c.window.title, c.window.width, c.window.height)
+		limb.window.init(c.window.title, c.window.width, c.window.height)
 		limb.window.setVisible(c.window.visible)
 		limb.logf("Window is {}", limb.window.isVisible() and "visible" or "hidden")
 	end
-
-	limb.timer.create()
 
 	local entrypoint_found = limb.filesystem.exists(c.entrypoint)
 	limb.logf("entry point '{}': {}", c.entrypoint, entrypoint_found and "found" or "not found")

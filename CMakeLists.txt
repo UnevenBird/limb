@@ -54,6 +54,7 @@ set(LIMB_FILESYSTEM
 set(LIMB
 	src/limb/limb.cpp
 	src/limb/wrap.cpp
+	src/main.cpp
 )
 
 add_executable(${PROJECT_NAME}

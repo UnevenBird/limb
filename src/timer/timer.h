@@ -27,8 +27,6 @@ private:
 	double m_delta, m_fps_update_time;
 };
 
-inline Timer* timer;
-
 } // namespace limb
 
 #endif // LIMB_TIMER_H
