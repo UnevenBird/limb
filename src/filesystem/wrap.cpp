@@ -45,9 +45,21 @@ static int w_normalizePath(lua_State *L) {
 	return 1;
 }
 
-static int w_removeExtension(lua_State *L) {
+static int w_getFilename(lua_State *L) {
 	std::string str_path = luax_checkstring(L, 1);
-	auto result = limb::filesystem::RemoveExtension(str_path);
+	bool remove_extension = lua_toboolean(L, 2);
+	auto result = limb::filesystem::GetFilename(str_path, remove_extension);
+	if (!result) {
+		return luaL_error(L, result.error().c_str());
+	}
+
+	lua_pushstring(L, result.value().c_str());
+	return 1;
+}
+
+static int w_getExtension(lua_State *L) {
+	std::string str_path = luax_checkstring(L, 1);
+	auto result = limb::filesystem::GetExtension(str_path);
 	if (!result) {
 		return luaL_error(L, result.error().c_str());
 	}
@@ -67,8 +79,9 @@ static const luaL_Reg functions[] = {
 	{ "isPathRelative", w_isPathRelative },
 	{ "isPathAbsolute", w_isPathAbsolute },
 	{ "normalizePath", w_normalizePath },
-	{ "removeExtension", w_removeExtension },
 	{ "getCurrentPath", w_getCurrentPath },
+	{ "getFilename", w_getFilename },
+	{ "getExtension", w_getExtension },
 	{ nullptr, nullptr }
 };
 

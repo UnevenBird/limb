@@ -40,6 +40,14 @@ tl::expected<bool, std::string> FileExists(const std::string& str_path) {
 	return (is_file && !is_symlink);
 }
 
+// tl::expected<bool, std::string> Mount(const std::string& str_path) {
+// 	auto result = FileExists(str_path);
+// 	if (!result) return result;
+	
+// 	bool success = PHYSFS_mount(str_path.c_str(), mountpoint, appendToPath) != 0;
+// 	return true;
+// }
+
 tl::expected<bool, std::string> IsPathRelative(const std::string& str_path) {
 	fs::path path(str_path);
 	if (path.empty()) return tl::unexpected<std::string>("empty path provided.");
@@ -58,10 +66,19 @@ tl::expected<std::string, std::string> NormalizePath(const std::string& str_path
 	return path.lexically_normal().string();
 }
 
-tl::expected<std::string, std::string> RemoveExtension(const std::string& str_path) {
+tl::expected<std::string, std::string> GetFilename(const std::string& str_path, bool remove_ext) {
 	fs::path path(str_path);
 	if (path.empty()) return tl::unexpected<std::string>("empty path provided.");
-	return path.replace_extension("").string();
+	if (!path.has_filename()) return std::string("");
+	if (remove_ext && path.has_extension()) path.replace_extension("");
+	return path.filename().string();
+}
+
+tl::expected<std::string, std::string> GetExtension(const std::string& str_path) {
+	fs::path path(str_path);
+	if (path.empty()) return tl::unexpected<std::string>("empty path provided.");
+	if (!path.has_extension()) return std::string("");
+	return path.extension().string();
 }
 
 std::string GetCurrentPath() {

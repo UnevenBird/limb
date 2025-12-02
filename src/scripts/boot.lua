@@ -31,7 +31,7 @@ function limb.boot()
 
 	local conf_path = "conf.lua"
 	if limb.filesystem.exists(conf_path) then
-		require(limb.filesystem.removeExtension(conf_path))
+		require(limb.filesystem.getFilename(conf_path, true))
 		limb.conf(c)
 	end
 
@@ -44,7 +44,7 @@ function limb.boot()
 	local entrypoint_found = limb.filesystem.exists(c.entrypoint)
 	limb.logf("entry point '{}': {}", c.entrypoint, entrypoint_found and "found" or "not found")
 	if entrypoint_found then
-		require(limb.filesystem.removeExtension(c.entrypoint))
+		require(limb.filesystem.getFilename(c.entrypoint, true))
 	end
 end
 
