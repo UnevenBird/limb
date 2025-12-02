@@ -4,7 +4,7 @@
 
 static int w_init(lua_State *L) {
 	if (limb::app::HasWindow()) {
-		return luaL_error(L, "window already exist!");
+		return luaL_error(L, "Window already exist!");
 	}
 
 	std::string title = luax_checkstring(L, 1);
@@ -24,18 +24,8 @@ static int w_setVisible(lua_State *L) {
 	return 0;
 }
 
-static int w_close(lua_State *L) {
-	if (!limb::app::HasWindow()) {
-		return luaL_error(L, "Failed to close window.");
-	}
-
-	delete limb::app::window;
-	limb::app::window = nullptr;
-	return 0;
-}
-
 static int w_opened(lua_State *L) {
-	lua_pushboolean(L, limb::app::window != nullptr);
+	lua_pushboolean(L, limb::app::HasWindow());
 	return 1;
 }
 
@@ -57,7 +47,6 @@ static int w_isVisible(lua_State *L) {
 
 static const luaL_Reg functions[] = {
 	{ "init", w_init },
-	{ "close", w_close },
 	{ "opened", w_opened },
 	{ "setTitle", w_setTitle },
 	{ "setVisible", w_setVisible },

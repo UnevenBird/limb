@@ -1,5 +1,6 @@
 #include "limb/limb.h"
 #include "graphics/graphics.h"
+#include "glad/glad.h"
 
 namespace limb {
 namespace graphics {

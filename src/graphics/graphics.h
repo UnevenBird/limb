@@ -1,7 +1,6 @@
 #ifndef LIMB_GRAPHICS_H
 #define LIMB_GRAPHICS_H
 
-#include "glad/glad.h"
 #include "common/color.h"
 
 namespace limb {

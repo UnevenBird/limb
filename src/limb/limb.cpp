@@ -26,7 +26,7 @@ tl::expected<bool, std::string> InitWindow(const std::string &title, int width, 
 	window = new Window(title, width, height);
 	if (!window->Init()) {
 		CloseWindow();
-		return tl::unexpected<std::string>("couldn't initialize window."); // @todo add proper error messages
+		return tl::unexpected<std::string>("Couldn't initialize window."); // @todo add proper error messages
 	}
 	return true;
 }
