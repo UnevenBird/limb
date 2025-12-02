@@ -44,7 +44,7 @@ static APP_STATE limb_run(APP_STATE &retval) {
 }
 
 int main(int argc, char **argv) {
-    limb::app::Initialize(argc, argv);
+	if (!limb::app::Initialize()) return 0;
 
 	APP_STATE retval = APP_STATE::QUIT;
 	do {

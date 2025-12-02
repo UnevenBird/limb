@@ -12,7 +12,7 @@ namespace app {
 inline Window* window = nullptr;
 inline Timer* timer = nullptr;
 
-void Initialize(int argc, char **argv);
+bool Initialize();
 bool HasWindow();
 tl::expected<bool, std::string> InitWindow(const std::string &title, int width, int height);
 void Shutdown();

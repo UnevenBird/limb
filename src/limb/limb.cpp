@@ -1,15 +1,20 @@
 #include "limb/limb.h"
+#include "fmt/format.h"
+#include "filesystem/filesystem.h"
 
 namespace limb {
 namespace app {
 
-void InitTimer() {
+bool Initialize() {
+	auto fs_result = filesystem::Init();
+	if (!fs_result) {
+		fmt::println("PhysFS error: {}", fs_result.error());
+		return false;
+	}
+
 	timer = new Timer();
 	timer->Init();
-}
-
-void Initialize(int argc, char **argv) {
-	InitTimer();
+	return true;
 }
 
 bool HasWindow() {

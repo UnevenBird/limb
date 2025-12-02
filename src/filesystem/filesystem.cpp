@@ -1,5 +1,5 @@
 #include "filesystem/filesystem.h"
-#include "common/config.h"
+#include "physfs.h"
 #include <filesystem>
 
 namespace fs = std::filesystem;
@@ -7,10 +7,19 @@ namespace fs = std::filesystem;
 namespace limb {
 namespace filesystem {
 
-tl::expected<bool, std::string> FileExists(const std::string& str_path) {
-	if (str_path.empty()) return tl::unexpected<std::string>("invalid path provided.");
+tl::expected<bool, std::string> Init() {
+	std::string cwd = fs::current_path().string();
+	PHYSFS_init(cwd.c_str());
+	if (!PHYSFS_isInit()) {
+		return tl::unexpected<std::string>(PHYSFS_getLastError());
+	}
+	return true;
+}
 
+tl::expected<bool, std::string> FileExists(const std::string& str_path) {
 	fs::path path(str_path);
+	if (path.empty()) return tl::unexpected<std::string>("empty path provided.");
+
 	std::error_code ec;
 
 	if (path.is_relative()) {
@@ -32,26 +41,26 @@ tl::expected<bool, std::string> FileExists(const std::string& str_path) {
 }
 
 tl::expected<bool, std::string> IsPathRelative(const std::string& str_path) {
-	if (str_path.empty()) return tl::unexpected<std::string>("invalid path provided.");
 	fs::path path(str_path);
+	if (path.empty()) return tl::unexpected<std::string>("empty path provided.");
 	return path.is_relative();
 }
 
 tl::expected<bool, std::string> IsPathAbsolute(const std::string& str_path) {
-	if (str_path.empty()) return tl::unexpected<std::string>("invalid path provided.");
 	fs::path path(str_path);
+	if (path.empty()) return tl::unexpected<std::string>("empty path provided.");
 	return path.is_absolute();
 }
 
 tl::expected<std::string, std::string> NormalizePath(const std::string& str_path) {
-	if (str_path.empty()) return tl::unexpected<std::string>("invalid path provided.");
 	fs::path path(str_path);
+	if (path.empty()) return tl::unexpected<std::string>("empty path provided.");
 	return path.lexically_normal().string();
 }
 
 tl::expected<std::string, std::string> RemoveExtension(const std::string& str_path) {
-	if (str_path.empty()) return tl::unexpected<std::string>("invalid path provided.");
 	fs::path path(str_path);
+	if (path.empty()) return tl::unexpected<std::string>("empty path provided.");
 	return path.replace_extension("").string();
 }
 

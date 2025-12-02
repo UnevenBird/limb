@@ -6,6 +6,12 @@ project(Ardus VERSION 0.1 LANGUAGES CXX)
 option(LUAJIT_FORCE_UTF8_FOPEN ON)
 add_subdirectory(external/LuaJIT)
 
+set(PHYSFS_BUILD_STATIC ON CACHE BOOL "Build static PhysicsFS" FORCE)
+set(PHYSFS_BUILD_SHARED OFF CACHE BOOL "Build shared PhysicsFS" FORCE)
+set(PHYSFS_BUILD_TEST OFF CACHE BOOL "Build tests" FORCE)
+set(PHYSFS_BUILD_DOCS OFF CACHE BOOL "Build docs" FORCE)
+add_subdirectory(external/physfs)
+
 add_library(RGFW SHARED src/common/impl.cpp)
 target_compile_definitions(RGFW PRIVATE RGFW_EXPORT)
 target_include_directories(RGFW PUBLIC
@@ -68,7 +74,7 @@ add_executable(${PROJECT_NAME}
 )
 
 if(MSVC)
-    target_compile_options(${PROJECT_NAME} PRIVATE /utf-8)
+	target_compile_options(${PROJECT_NAME} PRIVATE /utf-8)
 endif()
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE FMT_HEADER_ONLY)
@@ -77,11 +83,13 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 	"${CMAKE_SOURCE_DIR}/external/expected/include"
 	"${CMAKE_SOURCE_DIR}/external/fmt/include"
 	"${CMAKE_SOURCE_DIR}/external/stb/include"
+	"${CMAKE_SOURCE_DIR}/external/physfs/src"
 	"${CMAKE_SOURCE_DIR}/external/LuaJIT/src"
 	"${CMAKE_SOURCE_DIR}/external/glm"
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
+	physfs-static
 	libluajit
 	glad
 	RGFW
