@@ -6,8 +6,10 @@ YELLOW='\033[1;33m'
 CYAN='\033[0;36m'
 NC='\033[0m'
 
+EXECUTABLE_NAME="Untitled"
+
 echo -e "${CYAN}================================${NC}"
-echo -e "${CYAN}  Building Ardus Project  ${NC}"
+echo -e "${CYAN}  Building $EXECUTABLE_NAME Project  ${NC}"
 echo -e "${CYAN}================================${NC}"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -44,7 +46,7 @@ else
 	exit 1
 fi
 
-EXE_PATH="Release/Ardus.exe"
+EXE_PATH="Release/$EXECUTABLE_NAME.exe"
 if [ -f "$EXE_PATH" ]; then
 	echo -e "${GREEN}Executable: $EXE_PATH ${NC}"
 	echo -e "${GREEN}================================${NC}"

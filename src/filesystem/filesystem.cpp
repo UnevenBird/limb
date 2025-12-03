@@ -40,14 +40,6 @@ tl::expected<bool, std::string> FileExists(const std::string& str_path) {
 	return (is_file && !is_symlink);
 }
 
-// tl::expected<bool, std::string> Mount(const std::string& str_path) {
-// 	auto result = FileExists(str_path);
-// 	if (!result) return result;
-	
-// 	bool success = PHYSFS_mount(str_path.c_str(), mountpoint, appendToPath) != 0;
-// 	return true;
-// }
-
 tl::expected<bool, std::string> IsPathRelative(const std::string& str_path) {
 	fs::path path(str_path);
 	if (path.empty()) return tl::unexpected<std::string>("empty path provided.");

@@ -2,6 +2,7 @@
 #include "graphics/graphics.h"
 #include "common/color.h"
 
+#include "graphics/wrap_shader.h"
 #include "graphics/wrap_texture.h"
 
 static int w_clear(lua_State* L) {
@@ -36,6 +37,7 @@ static int w_present(lua_State* L) {
 static const luaL_Reg functions[] = {
 	{ "clear", w_clear },
 	{ "setBackgroundColor", w_setBackgroundColor },
+	{ "newShader", w_newShader },
 	{ "newTexture", w_newTexture },
 	{ "HSVtoRGB", w_HSVtoRGB },
 	{ "present", w_present },
@@ -43,6 +45,8 @@ static const luaL_Reg functions[] = {
 };
 
 extern "C" int luaopen_limb_graphics(lua_State *L) {
+	register_Shader(L);
+
 	lua_newtable(L);
 	luax_setfuncs(L, functions);
 	return 1;

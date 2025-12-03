@@ -1,1 +1,2 @@
-$PWD"/build/Release/Ardus.exe"
+EXECUTABLE_NAME="Untitled"
+$PWD"/build/Release/$EXECUTABLE_NAME.exe"

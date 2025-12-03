@@ -1,6 +1,6 @@
 #include "luax.h"
 
-int luax_premakeglobal(lua_State* L, const char *k) {
+int luax_premakeglobal(lua_State* L, const char* k) {
 	lua_getglobal(L, k);
 	if (!lua_istable(L, -1)) {
 		lua_pop(L, 1);
@@ -11,7 +11,7 @@ int luax_premakeglobal(lua_State* L, const char *k) {
 	return 1;
 }
 
-int luax_preloadlib(lua_State* L, lua_CFunction f, const char *name) {
+int luax_preloadlib(lua_State* L, lua_CFunction f, const char* name) {
 	lua_getglobal(L, "package");
 	lua_getfield(L, -1, "preload");
 	lua_pushcfunction(L, f);
@@ -20,7 +20,7 @@ int luax_preloadlib(lua_State* L, lua_CFunction f, const char *name) {
 	return 0;
 }
 
-void luax_setfuncs(lua_State* L, const luaL_Reg *l) {
+void luax_setfuncs(lua_State* L, const luaL_Reg* l) {
 	if (l == nullptr)
 		return;
 

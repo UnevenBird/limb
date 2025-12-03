@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.15)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-project(Ardus VERSION 0.1 LANGUAGES CXX)
+
+set(EXECUTABLE_NAME "Untitled")
+project(${EXECUTABLE_NAME} VERSION 0.1 LANGUAGES CXX)
 
 option(LUAJIT_FORCE_UTF8_FOPEN ON)
 add_subdirectory(external/LuaJIT)
@@ -46,8 +48,10 @@ set(LIMB_EVENT
 )
 
 set(LIMB_GPATHICS
+	src/graphics/shader.cpp
 	src/graphics/texture.cpp
 	src/graphics/graphics.cpp
+	src/graphics/wrap_shader.cpp
 	src/graphics/wrap_texture.cpp
 	src/graphics/wrap.cpp
 )
@@ -63,7 +67,7 @@ set(LIMB
 	src/main.cpp
 )
 
-add_executable(${PROJECT_NAME}
+add_executable(${EXECUTABLE_NAME}
 	${LIMB_COMMON}
 	${LIMB_WINDOW}
 	${LIMB_TIMER}
