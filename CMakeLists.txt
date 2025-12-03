@@ -48,9 +48,11 @@ set(LIMB_EVENT
 
 set(LIMB_GPATHICS
 	src/graphics/shader.cpp
+	src/graphics/mesh.cpp
 	src/graphics/texture.cpp
 	src/graphics/graphics.cpp
 	src/graphics/wrap_shader.cpp
+	src/graphics/wrap_mesh.cpp
 	src/graphics/wrap_texture.cpp
 	src/graphics/wrap.cpp
 )

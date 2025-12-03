@@ -91,12 +91,8 @@ tl::expected<bool, std::string> Shader::Init(const std::string& vertex_src, cons
 	return true;
 }
 
-void Shader::Bind() {
-	glUseProgram(m_program);
-}
-
-void Shader::Unbind() {
-
+GLuint Shader::GetProgram() const {
+	return m_program;
 }
 
 } // namespace graphics

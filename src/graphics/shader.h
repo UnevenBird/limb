@@ -14,11 +14,10 @@ public:
 	~Shader();
 
 	tl::expected<bool, std::string> Init(const std::string& vertex, const std::string& fragment);
-	void Bind();
-	void Unbind();
+	GLuint GetProgram() const;
 
 private:
-	unsigned int m_program = 0;
+	GLuint m_program = 0;
 };
 
 } // namespace graphics

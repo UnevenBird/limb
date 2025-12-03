@@ -65,5 +65,21 @@ void Present() {
 	limb::app::window->SwapBuffers();
 }
 
+void SetWireframe(bool state) {
+	if (state) {
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	} else {
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
+}
+
+void BindShader(const Shader* shader) {
+	glUseProgram(shader->GetProgram());
+}
+
+void UnbindShader() {
+	glUseProgram(0);
+}
+
 } // namespace graphics
 } // namespace limb

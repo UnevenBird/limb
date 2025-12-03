@@ -19,6 +19,7 @@ public:
 	void SetTitle(const std::string &title);
 	void SwapBuffers();
 	bool IsVisible();
+	void OnResize(int width, int height);
 	RGFW_window* GetHandler();
 
 private:
