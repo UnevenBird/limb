@@ -20,7 +20,7 @@ static int w_setBackgroundColor(lua_State* L) {
 static int w_HSVtoRGB(lua_State* L) {
 	limb::Color in, out;
 	luax_checkcolor(L, 1, in);
-	limb::HSVtoRGB(in, out);
+	limb::graphics::HSVtoRGB(in, out);
 
 	lua_pushnumber(L, out.r);
 	lua_pushnumber(L, out.g);

@@ -6,10 +6,11 @@
 namespace limb {
 namespace graphics {
 
-inline Color bgColor;
+inline Color bg_color;
 
 void Clear();
 void SetBackgroundColor(const Color& color);
+void HSVtoRGB(const Color& in, Color& out);
 void Present();
 
 } // namespace graphics

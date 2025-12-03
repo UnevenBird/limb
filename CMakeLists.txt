@@ -28,7 +28,6 @@ target_include_directories(glad PUBLIC
 )
 
 set(LIMB_COMMON
-	src/common/color.cpp
 	src/common/luax.cpp
 )
 
