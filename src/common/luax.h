@@ -17,6 +17,8 @@ void luax_setfuncs(lua_State* L, const luaL_Reg* l);
 int luax_resume(lua_State* L, int nargs, int* nres);
 std::string luax_checkstring(lua_State* L, int idx);
 bool luax_checkcolor(lua_State* L, int index, limb::Color& color);
+int luax_typerror(lua_State* L, int idx, const char* expected);
+int luax_tabletyperror(lua_State* L, int idx, int tblidx, const char* expected);
 
 template<typename T>
 T* luax_checkuserdata(lua_State* L, int idx, const char* name) {

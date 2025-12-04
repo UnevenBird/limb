@@ -12,27 +12,27 @@ extern "C" int w_newMesh(lua_State *L) {
 	std::vector<float> vertices;
 	vertices.reserve(vertex_count);
 	for (int i = 1; i <= vertex_count; ++i) {
-        lua_rawgeti(L, 1, i);
-        if (!lua_isnumber(L, -1)) {
+		lua_rawgeti(L, 1, i);
+		if (!lua_isnumber(L, -1)) {
 			lua_pop(L, 1);
-			return luaL_error(L, "bad argument #%d (number expected)", i);
-        }
+			return luax_tabletyperror(L, 1, i, "number");
+		}
 		vertices.push_back(static_cast<float>(lua_tonumber(L, -1)));
-        lua_pop(L, 1);
-    }
+		lua_pop(L, 1);
+	}
 
 	int index_count = static_cast<int> (lua_objlen(L, 2));
 	std::vector<unsigned int> indices;
 	indices.reserve(index_count);
 	for (int i = 1; i <= index_count; ++i) {
-        lua_rawgeti(L, 2, i);
-        if (!lua_isnumber(L, -1)) {
+		lua_rawgeti(L, 2, i);
+		if (!lua_isnumber(L, -1)) {
 			lua_pop(L, 1);
-			return luaL_error(L, "bad argument #%d (number expected)", i);
-        }
+			return luax_tabletyperror(L, 2, i, "number");
+		}
 		indices.push_back(static_cast<unsigned int>(lua_tointeger(L, -1)));
-        lua_pop(L, 1);
-    }
+		lua_pop(L, 1);
+	}
 
 	void* ud = lua_newuserdata(L, sizeof(limb::graphics::Mesh));
 	limb::graphics::Mesh* mesh = new(ud) limb::graphics::Mesh();

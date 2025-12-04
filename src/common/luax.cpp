@@ -78,3 +78,19 @@ bool luax_checkcolor(lua_State* L, int index, limb::Color& color) {
 
 	return false;
 }
+
+int luax_typerror(lua_State* L, int idx, const char* expected) {
+	int type = lua_type(L, idx);
+	const char* tname = lua_typename(L, type);
+	const char* msg = lua_pushfstring(L, "%s expected, got %s", expected, tname);
+	return luaL_argerror(L, idx, msg);
+}
+
+int luax_tabletyperror(lua_State* L, int idx, int tblidx, const char* expected) {
+	lua_rawgeti(L, idx, tblidx);
+	int type = lua_type(L, -1);
+	const char* tname = lua_typename(L, type);
+	const char* msg = lua_pushfstring(L, "%s expected at index #%d, got %s", expected, tblidx, tname);
+	lua_pop(L, 2);
+	return luaL_argerror(L, idx, msg);
+}
