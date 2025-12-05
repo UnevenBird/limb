@@ -45,6 +45,18 @@ std::string luax_checkstring(lua_State* L, int idx) {
 	return std::string(str, len);
 }
 
+float luax_tofloat(lua_State* L, int idx) {
+	return static_cast<float>(lua_tonumber(L, idx));
+}
+
+float luax_checkfloat(lua_State* L, int idx) {
+	return static_cast<float>(luaL_checknumber(L, idx));
+}
+
+float luax_optfloat(lua_State* L, int idx, lua_Number def) {
+	return static_cast<float>(luaL_optnumber(L, idx, def));
+}
+
 bool luax_checkcolor(lua_State* L, int index, limb::Color& color) {
 	int top = lua_gettop(L);
 	if (index < 1 || index > top) {
@@ -55,24 +67,24 @@ bool luax_checkcolor(lua_State* L, int index, limb::Color& color) {
 		for (int i = 1; i <= 4; i++) {
 			lua_rawgeti(L, index, i);
 		}
-		color.r = (float) luaL_checknumber(L, -4);
-		color.g = (float) luaL_checknumber(L, -3);
-		color.b = (float) luaL_checknumber(L, -2);
-		color.a = (float) luaL_optnumber(L, -1, 1.0f);
+		color.r = luax_checkfloat(L, -4);
+		color.g = luax_checkfloat(L, -3);
+		color.b = luax_checkfloat(L, -2);
+		color.a = luax_optfloat(L, -1, 1.0f);
 		lua_pop(L, 4);
 		return true;
 	} else if (lua_gettop(L) >= index + 2) {
-		color.r = (float) luaL_checknumber(L, index);
-		color.g = (float) luaL_checknumber(L, index + 1);
-		color.b = (float) luaL_checknumber(L, index + 2);
-		color.a = (float) luaL_optnumber(L, index + 3, 1.0f);
+		color.r = luax_checkfloat(L, index);
+		color.g = luax_checkfloat(L, index + 1);
+		color.b = luax_checkfloat(L, index + 2);
+		color.a = luax_optfloat(L, index + 3, 1.0f);
 		return true;
 	} else if (lua_gettop(L) <= index + 1) {
 		uint32_t x = (uint32_t) luaL_checkinteger(L, index);
 		color.r = ((x >> 16) & 0xff) / 255.0f;
 		color.g = ((x >> 8) & 0xff) / 255.0f;
 		color.b = ((x >> 0) & 0xff) / 255.0f;
-		color.a = (float) luaL_optnumber(L, index + 1, 1.0f);
+		color.a = luax_optfloat(L, index + 1, 1.0f);
 		return true;
 	}
 

@@ -13,6 +13,7 @@ function limb.boot()
 		"event",
 		"graphics",
 		"filesystem",
+		"math",
 	} do
 		limb[v] = require("limb." .. v)
 		limb.logf("required module {}", v)

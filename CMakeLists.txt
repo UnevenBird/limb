@@ -62,6 +62,11 @@ set(LIMB_FILESYSTEM
 	src/filesystem/wrap.cpp
 )
 
+set(LIMB_MATH
+	src/math/mathlib.cpp
+	src/math/wrap.cpp
+)
+
 set(LIMB
 	src/limb/limb.cpp
 	src/limb/wrap.cpp
@@ -75,6 +80,7 @@ add_executable(${EXECUTABLE_NAME}
 	${LIMB_EVENT}
 	${LIMB_GPATHICS}
 	${LIMB_FILESYSTEM}
+	${LIMB_MATH}
 	${LIMB}
 )
 

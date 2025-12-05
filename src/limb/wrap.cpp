@@ -14,6 +14,7 @@ static const luaL_Reg modules[] = {
 	{ "limb.event", luaopen_limb_event },
 	{ "limb.graphics", luaopen_limb_graphics },
 	{ "limb.filesystem", luaopen_limb_filesystem },
+	{ "limb.math", luaopen_limb_math },
 	{ nullptr, nullptr }
 };
 
