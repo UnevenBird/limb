@@ -78,10 +78,6 @@ static const luaL_Reg functions[] = {
 	{ nullptr, nullptr }
 };
 
-extern "C" void register_Shader(lua_State* L) {
-	luaL_newmetatable(L, "Shader");
-	luax_setfuncs(L, functions);
-	lua_pushvalue(L, -1);
-	lua_setfield(L, -2, "__index");
-	lua_pop(L, 1);
+extern "C" void luaopen_limb_Shader(lua_State* L) {
+	luax_register_type(L, "Shader", functions);
 }

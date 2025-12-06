@@ -37,7 +37,7 @@ bool Window::Init() {
 		return false;
 	}
 
-	OnResize(m_width, m_height);
+	Resize(m_width, m_height);
 
 	return true;
 }
@@ -67,7 +67,7 @@ RGFW_window* Window::GetHandler() {
 	return m_window;
 }
 
-void Window::OnResize(int width, int height) {
+void Window::Resize(int width, int height) {
 	m_width = width;
 	m_height = height;
 	glViewport(0, 0, m_width, m_height);

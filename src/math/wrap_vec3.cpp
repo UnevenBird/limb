@@ -69,10 +69,6 @@ static const luaL_Reg functions[] = {
 	{ nullptr, nullptr }
 };
 
-extern "C" void register_Vec3(lua_State* L) {
-	luaL_newmetatable(L, "Vec3");
-	luax_setfuncs(L, functions);
-	lua_pushvalue(L, -1);
-	lua_setfield(L, -2, "__index");
-	lua_pop(L, 1);
+extern "C" void luaopen_limb_Vec3(lua_State* L) {
+	luax_register_type(L, "Vec3", functions);
 }

@@ -11,6 +11,16 @@ static int w_clear(lua_State* L) {
 	return 0;
 }
 
+static int w_draw(lua_State* L) {
+	if (luax_isuserdata(L, 1, "Mesh")) {
+		auto* mesh = luax_checkuserdata<limb::graphics::Mesh>(L, 1, "Mesh");
+		limb::graphics::Render(mesh);
+	} else {
+		return luax_typerror(L, 1, "Mesh");
+	}
+	return 0;
+}
+
 static int w_setBackgroundColor(lua_State* L) {
 	limb::Color c;
 	luax_checkcolor(L, 1, c);
@@ -53,6 +63,7 @@ static int w_present(lua_State* L) {
 
 static const luaL_Reg functions[] = {
 	{ "clear", w_clear },
+	{ "draw", w_draw },
 	{ "setBackgroundColor", w_setBackgroundColor },
 	{ "newShader", w_newShader },
 	{ "newMesh", w_newMesh },
@@ -65,8 +76,9 @@ static const luaL_Reg functions[] = {
 };
 
 extern "C" int luaopen_limb_graphics(lua_State *L) {
-	register_Shader(L);
-	register_Mesh(L);
+	luaopen_limb_Shader(L);
+	luaopen_limb_Mesh(L);
+	luaopen_limb_Texture(L);
 
 	lua_newtable(L);
 	luax_setfuncs(L, functions);

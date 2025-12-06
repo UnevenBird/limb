@@ -5,7 +5,7 @@
 
 extern "C" {
 int w_newVec3(lua_State *L);
-void register_Vec3(lua_State* L);
+void luaopen_limb_Vec3(lua_State* L);
 }
 
 #endif // LIMB_VEC3_WRAP_H

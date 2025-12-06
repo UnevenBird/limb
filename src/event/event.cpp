@@ -75,11 +75,17 @@ void PumpEvents() {
 				.type = EventType::WindowMoved,
 			});
 			break;
-		case RGFW_windowResized:
+		case RGFW_windowResized: {
+			i32 width, height;
+			RGFW_window_getSize(window, &width, &height);
 			event_queue.emplace_back(Event {
 				.type = EventType::WindowResized,
+				.x = width,
+				.y = height,
 			});
+			limb::app::window->Resize(width, height);
 			break;
+		}
 		case RGFW_focusIn:
 			event_queue.emplace_back(Event {
 				.type = EventType::WindowFocus,

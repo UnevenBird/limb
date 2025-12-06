@@ -26,9 +26,9 @@ static const luaL_Reg functions[] = {
 };
 
 extern "C" int luaopen_limb_math(lua_State *L) {
-	register_Vec2(L);
-	register_Vec3(L);
-	register_Vec4(L);
+	luaopen_limb_Vec2(L);
+	luaopen_limb_Vec3(L);
+	luaopen_limb_Vec4(L);
 
 	lua_newtable(L);
 	luax_setfuncs(L, functions);

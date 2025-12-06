@@ -5,7 +5,7 @@
 
 extern "C" {
 int w_newMesh(lua_State *L);
-void register_Mesh(lua_State* L);
+void luaopen_limb_Mesh(lua_State* L);
 }
 
 #endif // LIMB_MESH_WRAP_H

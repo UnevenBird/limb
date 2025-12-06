@@ -50,12 +50,6 @@ extern "C" int w_newMesh(lua_State *L) {
 	return 1;
 }
 
-static int w_render(lua_State *L) {
-	auto* mesh = luax_checkuserdata<limb::graphics::Mesh>(L, 1, "Mesh");
-	mesh->Render();
-	return 0;
-}
-
 static int w_gc(lua_State *L) {
 	auto* mesh = luax_checkuserdata<limb::graphics::Mesh>(L, 1, "Mesh");
 	mesh->~Mesh();
@@ -69,16 +63,11 @@ static int w_tostring(lua_State *L) {
 }
 
 static const luaL_Reg functions[] = {
-	{ "render", w_render },
 	{ "__gc", w_gc },
 	{ "__tostring", w_tostring },
 	{ nullptr, nullptr }
 };
 
-extern "C" void register_Mesh(lua_State* L) {
-	luaL_newmetatable(L, "Mesh");
-	luax_setfuncs(L, functions);
-	lua_pushvalue(L, -1);
-	lua_setfield(L, -2, "__index");
-	lua_pop(L, 1);
+extern "C" void luaopen_limb_Mesh(lua_State* L) {
+	luax_register_type(L, "Mesh", functions);
 }

@@ -3,7 +3,7 @@
 namespace limb {
 namespace graphics {
 
-Texture::Texture()
+Texture::Texture() : width(0), height(0)
 {}
 
 Texture::~Texture()

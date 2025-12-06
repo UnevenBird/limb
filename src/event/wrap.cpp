@@ -52,7 +52,9 @@ static int w_poll(lua_State *L) {
 		case limb::EventType::WindowMoved:
 			return 1;
 		case limb::EventType::WindowResized:
-			return 1;
+			lua_pushinteger(L, event.x);
+			lua_pushinteger(L, event.y);
+			return 3;
 		case limb::EventType::WindowFocus:
 			return 1;
 		case limb::EventType::WindowUnfocus:

@@ -18,7 +18,7 @@ Mesh::~Mesh() {
 
 tl::expected<bool, std::string> Mesh::Init(const std::vector<float>& vertices, const std::vector<unsigned int>& indices) {
 	m_vertex_count = vertices.size() / 3;
-	m_index_count = indices.size();
+	m_index_count = static_cast<GLsizei>(indices.size());
 
 	glGenVertexArrays(1, &m_vao);
 	if (m_vao == 0) {
@@ -59,13 +59,6 @@ tl::expected<bool, std::string> Mesh::Init(const std::vector<float>& vertices, c
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	return true;
-}
-
-void Mesh::Render() const {
-	if (m_vao == 0 || m_ebo == 0) return;
-	glBindVertexArray(m_vao);
-	glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_index_count), GL_UNSIGNED_INT, nullptr);
-	// glBindVertexArray(0); // no need to unbind it every time
 }
 
 } // namespace graphics

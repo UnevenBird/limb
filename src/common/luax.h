@@ -11,6 +11,7 @@ extern "C" {
 	#include <lauxlib.h>
 }
 
+extern "C" void luax_register_type(lua_State* L, const char* name, const luaL_Reg* functions);
 int luax_premakeglobal(lua_State* L, const char* k);
 int luax_preloadlib(lua_State* L, lua_CFunction f, const char* name);
 void luax_setfuncs(lua_State* L, const luaL_Reg* l);

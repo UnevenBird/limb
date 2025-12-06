@@ -5,7 +5,7 @@
 
 extern "C" {
 int w_newShader(lua_State *L);
-void register_Shader(lua_State* L);
+void luaopen_limb_Shader(lua_State* L);
 }
 
 #endif // LIMB_SHADER_WRAP_H

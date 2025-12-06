@@ -81,5 +81,16 @@ void UnbindShader() {
 	glUseProgram(0);
 }
 
+void Render(const Mesh* mesh) {
+	GLuint vao = mesh->GetVAO();
+	GLuint ebo = mesh->GetEBO();
+	if (vao == 0 || ebo == 0) return;
+
+	GLsizei index_count = mesh->GetIndexCount();
+	glBindVertexArray(vao);
+	glDrawElements(GL_TRIANGLES, index_count, GL_UNSIGNED_INT, nullptr);
+	// glBindVertexArray(0); // no need to unbind it every time
+}
+
 } // namespace graphics
 } // namespace limb
