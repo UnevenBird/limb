@@ -4,8 +4,10 @@
 #include <vector>
 
 extern "C" int w_newMesh(lua_State *L) {
-	if (!lua_istable(L, 1) || !lua_istable(L, 2)) {
-		return luaL_error(L, "Error!!!");
+	if (!lua_istable(L, 1)) {
+		return luax_typerror(L, 1, "table");
+	} else if (!lua_istable(L, 2)) {
+		return luax_typerror(L, 2, "table");
 	}
 
 	int vertex_count = static_cast<int> (lua_objlen(L, 1));

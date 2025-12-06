@@ -58,8 +58,8 @@ float luax_optfloat(lua_State* L, int idx, lua_Number def) {
 }
 
 bool luax_checkcolor(lua_State* L, int index, limb::Color& color) {
-	int top = lua_gettop(L);
-	if (index < 1 || index > top) {
+	int argc = lua_gettop(L);
+	if (index < 1 || index > argc) {
 		return false;
 	}
 
@@ -73,13 +73,13 @@ bool luax_checkcolor(lua_State* L, int index, limb::Color& color) {
 		color.a = luax_optfloat(L, -1, 1.0f);
 		lua_pop(L, 4);
 		return true;
-	} else if (lua_gettop(L) >= index + 2) {
+	} else if (argc >= index + 2) {
 		color.r = luax_checkfloat(L, index);
 		color.g = luax_checkfloat(L, index + 1);
 		color.b = luax_checkfloat(L, index + 2);
 		color.a = luax_optfloat(L, index + 3, 1.0f);
 		return true;
-	} else if (lua_gettop(L) <= index + 1) {
+	} else if (argc <= index + 1) {
 		uint32_t x = (uint32_t) luaL_checkinteger(L, index);
 		color.r = ((x >> 16) & 0xff) / 255.0f;
 		color.g = ((x >> 8) & 0xff) / 255.0f;
@@ -105,4 +105,32 @@ int luax_tabletyperror(lua_State* L, int idx, int tblidx, const char* expected) 
 	const char* msg = lua_pushfstring(L, "%s expected at index #%d, got %s", expected, tblidx, tname);
 	lua_pop(L, 2);
 	return luaL_argerror(L, idx, msg);
+}
+
+int luax_argcerror(lua_State* L, int expected) {
+	int argc = lua_gettop(L);
+	if (argc < expected) return luaL_error(L, "Wrong argument count (at least %d expected, got %d)", expected, argc);
+	return 0;
+}
+
+int luax_argcerror(lua_State* L, int min, int max) {
+	int argc = lua_gettop(L);
+	if (argc < min || argc > max) return luaL_error(L, "Wrong argument count (%d-%d expected, got %d)", min, max, argc);
+	return 0;
+}
+
+bool luax_isuserdata(lua_State* L, int idx, const char* name) {
+	if (lua_type(L, idx) != LUA_TUSERDATA) return false;
+	if (!lua_getmetatable(L, idx)) return false;
+
+	luaL_getmetatable(L, name);
+
+	if (!lua_istable(L, -1)) {
+		lua_pop(L, 2);
+		return false;
+	}
+
+	bool equal = lua_rawequal(L, -1, -2) != 0;
+	lua_pop(L, 2);
+	return equal;
 }

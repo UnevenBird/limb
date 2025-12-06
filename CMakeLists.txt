@@ -64,6 +64,9 @@ set(LIMB_FILESYSTEM
 
 set(LIMB_MATH
 	src/math/mathlib.cpp
+	src/math/wrap_vec2.cpp
+	src/math/wrap_vec3.cpp
+	src/math/wrap_vec4.cpp
 	src/math/wrap.cpp
 )
 

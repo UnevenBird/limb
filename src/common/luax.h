@@ -22,6 +22,8 @@ float luax_optfloat(lua_State* L, int idx, lua_Number def);
 bool luax_checkcolor(lua_State* L, int index, limb::Color& color);
 int luax_typerror(lua_State* L, int idx, const char* expected);
 int luax_tabletyperror(lua_State* L, int idx, int tblidx, const char* expected);
+int luax_argcerror(lua_State* L, int min);
+int luax_argcerror(lua_State* L, int min, int max);
 
 template<typename T>
 T* luax_checkuserdata(lua_State* L, int idx, const char* name) {
@@ -29,5 +31,7 @@ T* luax_checkuserdata(lua_State* L, int idx, const char* name) {
 	if (!ud) luaL_error(L, "%s expected", name);
 	return static_cast<T*>(ud);
 }
+
+bool luax_isuserdata(lua_State* L, int idx, const char* name);
 
 #endif // LIMB_LUAX_H
