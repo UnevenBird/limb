@@ -19,6 +19,46 @@ extern "C" int w_newShader(lua_State *L) {
 	return 1;
 }
 
+static int w_send(lua_State *L) {
+	auto* shader = luax_checkuserdata<limb::graphics::Shader>(L, 1, "Shader");
+	std::string uniform = luax_checkstring(L, 2);
+	int type = lua_type(L, 3);
+
+	bool success = false;
+	switch (type) {
+		case LUA_TNUMBER: {
+			float value = luax_checkfloat(L, 3);
+			success = shader->SendUniform(uniform, value);
+			break;
+		}
+		case LUA_TUSERDATA: {
+			if (luax_isuserdata(L, 3, "Vec2")) {
+				auto* vec = luax_checkuserdata<glm::vec2>(L, 3, "Vec2");
+				success = shader->SendUniform(uniform, *vec);
+			}
+			else if (luax_isuserdata(L, 3, "Vec3")) {
+				auto* vec = luax_checkuserdata<glm::vec3>(L, 3, "Vec3");
+				success = shader->SendUniform(uniform, *vec);
+			}
+			else if (luax_isuserdata(L, 3, "Vec4")) {
+				auto* vec = luax_checkuserdata<glm::vec4>(L, 3, "Vec4");
+				success = shader->SendUniform(uniform, *vec);
+			} else {
+				return luax_typerror(L, 3, "number or vector");
+			}
+			break;
+		}
+		default: {
+			return luax_typerror(L, 3, "number or vector");
+		}
+	}
+
+	if (!success) {
+		return luaL_error(L, "Failed to set uniform '%s': shader not active or uniform doesn't exist.", uniform.c_str());
+	}
+	return 0;
+}
+
 static int w_gc(lua_State *L) {
 	auto* shader = luax_checkuserdata<limb::graphics::Shader>(L, 1, "Shader");
 	shader->~Shader();
@@ -32,6 +72,7 @@ static int w_tostring(lua_State *L) {
 }
 
 static const luaL_Reg functions[] = {
+	{ "send", w_send },
 	{ "__gc", w_gc },
 	{ "__tostring", w_tostring },
 	{ nullptr, nullptr }

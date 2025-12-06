@@ -1,4 +1,5 @@
 #include "graphics/shader.h"
+#include <glm/gtc/type_ptr.hpp>
 #include <vector>
 
 namespace limb {
@@ -88,6 +89,38 @@ tl::expected<bool, std::string> Shader::Init(const std::string& vertex_src, cons
 	glDeleteShader(vertex_shader);
 	glDeleteShader(fragment_shader);
 
+	return true;
+}
+
+bool Shader::SendUniform(const std::string& name, float value) {
+	GLint loc = glGetUniformLocation(m_program, name.c_str());
+	if (loc == -1) return false;
+	// glUseProgram(m_program);
+	glUniform1f(loc, value);
+	return true;
+}
+
+bool Shader::SendUniform(const std::string& name, const glm::vec2& vec) {
+	GLint loc = glGetUniformLocation(m_program, name.c_str());
+	if (loc == -1) return false;
+	// glUseProgram(m_program);
+	glUniform2fv(loc, 1, glm::value_ptr(vec));
+	return true;
+}
+
+bool Shader::SendUniform(const std::string& name, const glm::vec3& vec) {
+	GLint loc = glGetUniformLocation(m_program, name.c_str());
+	if (loc == -1) return false;
+	// glUseProgram(m_program);
+	glUniform3fv(loc, 1, glm::value_ptr(vec));
+	return true;
+}
+
+bool Shader::SendUniform(const std::string& name, const glm::vec4& vec) {
+	GLint loc = glGetUniformLocation(m_program, name.c_str());
+	if (loc == -1) return false;
+	// glUseProgram(m_program);
+	glUniform4fv(loc, 1, glm::value_ptr(vec));
 	return true;
 }
 

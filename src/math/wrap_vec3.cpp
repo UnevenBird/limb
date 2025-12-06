@@ -36,7 +36,7 @@ static int w_set(lua_State *L) {
 		return 0;
 
 	} else {
-		return luax_typerror(L, 1, "table or 3 numbers");
+		return luax_typerror(L, 2, "table or 3 numbers");
 	}
 }
 
