@@ -16,8 +16,8 @@ Mesh::~Mesh() {
 		glDeleteVertexArrays(1, &m_vao);
 }
 
-tl::expected<bool, std::string> Mesh::Init(const std::vector<float>& vertices, const std::vector<unsigned int>& indices) {
-	m_vertex_count = vertices.size() / 3;
+tl::expected<bool, std::string> Mesh::Init(const VertexLayout& layout, const std::vector<float>& vertex_data, const std::vector<unsigned int>& indices) {
+	// m_vertex_count = vertex_data.size() / layout.components;
 	m_index_count = static_cast<GLsizei>(indices.size());
 
 	glGenVertexArrays(1, &m_vao);
@@ -32,31 +32,38 @@ tl::expected<bool, std::string> Mesh::Init(const std::vector<float>& vertices, c
 		return tl::unexpected<std::string>("Failed to create VBO.");
 	}
 	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), vertices.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, vertex_data.size() * sizeof(float), vertex_data.data(), GL_STATIC_DRAW);
 
-	glGenBuffers(1, &m_ebo);
-	if (m_ebo == 0) {
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindVertexArray(0);
-		return tl::unexpected<std::string>("Failed to create EBO.");
+	if (!indices.empty()) {
+		glGenBuffers(1, &m_ebo);
+		if (m_ebo == 0) {
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			glBindVertexArray(0);
+			return tl::unexpected<std::string>("Failed to create EBO.");
+		}
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), indices.data(), GL_STATIC_DRAW);
+	} else {
+		m_ebo = 0;
 	}
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), indices.data(), GL_STATIC_DRAW);
 
-	// layout(location = 0) vec3 position
-	GLuint location = 0;
-	GLint component_count = 3;
-	GLenum attr_type = GL_FLOAT;
-	GLboolean normalized = GL_FALSE;
-	GLsizei stride = component_count * sizeof(float);
-	const void* pointer = nullptr;
-
-	glEnableVertexAttribArray(location);
-	glVertexAttribPointer(location, component_count, attr_type, normalized, stride, pointer);
+	for (const auto& attr : layout.attributes) {
+		glEnableVertexAttribArray(attr.location);
+		glVertexAttribPointer(
+			attr.location,
+			attr.components,
+			attr.type,
+			attr.normalized,
+			layout.stride,
+			(void*)attr.offset
+		);
+	}
 
 	glBindVertexArray(0);
-
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	if (m_ebo != 0) {
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	}
 
 	return true;
 }
