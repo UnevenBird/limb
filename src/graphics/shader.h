@@ -13,7 +13,7 @@ namespace graphics {
 
 class Shader {
 public:
-	Shader();
+	Shader() = default;
 	~Shader();
 
 	tl::expected<bool, std::string> Init(const std::string& vertex, const std::string& fragment);

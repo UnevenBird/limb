@@ -5,8 +5,6 @@
 namespace limb {
 namespace graphics {
 
-Shader::Shader() = default;
-
 Shader::~Shader() {
 	if (m_program != 0)
 		glDeleteProgram(m_program);

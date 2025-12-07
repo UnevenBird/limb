@@ -3,8 +3,6 @@
 namespace limb {
 namespace graphics {
 
-Mesh::Mesh() = default;
-
 Mesh::~Mesh() {
 	if (m_ebo != 0)
 		glDeleteBuffers(1, &m_ebo);

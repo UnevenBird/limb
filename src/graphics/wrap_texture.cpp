@@ -7,6 +7,12 @@ extern "C" int w_newTexture(lua_State *L) {
 	void* ud = lua_newuserdata(L, sizeof(limb::graphics::Texture));
 	limb::graphics::Texture* texture = new(ud) limb::graphics::Texture();
 
+	auto result = texture->Init(path);
+	if (!result) {
+		texture->~Texture();
+		return luaL_error(L, "Error: %s", result.error().c_str());
+	}
+
 	luaL_getmetatable(L, "Texture");
 	lua_setmetatable(L, -2);
 	return 1;
@@ -14,8 +20,8 @@ extern "C" int w_newTexture(lua_State *L) {
 
 static int w_getDimensions(lua_State *L) {
 	auto* texture = luax_checkuserdata<limb::graphics::Texture>(L, 1, "Texture");
-	lua_pushinteger(L, texture->width);
-	lua_pushinteger(L, texture->height);
+	lua_pushinteger(L, texture->GetWidth());
+	lua_pushinteger(L, texture->GetHeight());
 	return 2;
 }
 

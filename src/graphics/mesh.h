@@ -24,7 +24,7 @@ struct VertexLayout {
 
 class Mesh {
 public:
-	Mesh();
+	Mesh() = default;
 	~Mesh();
 
 	tl::expected<bool, std::string> Init(const VertexLayout& layout, const std::vector<float>& vertex_data, const std::vector<unsigned int>& indices);
