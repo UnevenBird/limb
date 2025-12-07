@@ -1,4 +1,3 @@
-#include "glm/vec4.hpp"
 #include "math/wrap_vec4.h"
 
 extern "C" int w_newVec4(lua_State *L) {
@@ -16,7 +15,7 @@ extern "C" int w_newVec4(lua_State *L) {
 }
 
 static int w_set(lua_State *L) {
-	auto* vec = luax_checkuserdata<glm::vec4>(L, 1, "Vec4");
+	auto* vec = limb::math::luax_checkvec4(L, 1);
 	if (lua_istable(L, 2)) {
 		if (lua_objlen(L, 2) < 3) return luax_argcerror(L, 3, 4);
 		
@@ -44,7 +43,7 @@ static int w_set(lua_State *L) {
 }
 
 static int w_get(lua_State *L) {
-	auto* vec = luax_checkuserdata<glm::vec4>(L, 1, "Vec4");
+	auto* vec = limb::math::luax_checkvec4(L, 1);
 	lua_pushnumber(L, vec->x);
 	lua_pushnumber(L, vec->y);
 	lua_pushnumber(L, vec->z);
@@ -53,14 +52,14 @@ static int w_get(lua_State *L) {
 }
 
 static int w_gc(lua_State *L) {
-	auto* vec = luax_checkuserdata<glm::vec4>(L, 1, "Vec4");
+	auto* vec = limb::math::luax_checkvec4(L, 1);
 	using type = glm::vec4;
 	vec->~type();
 	return 0;
 }
 
 static int w_tostring(lua_State *L) {
-	auto* vec = luax_checkuserdata<glm::vec4>(L, 1, "Vec4");
+	auto* vec = limb::math::luax_checkvec4(L, 1);
 	lua_pushfstring(L, "Vec4 (%p)", vec);
 	return 1;
 }

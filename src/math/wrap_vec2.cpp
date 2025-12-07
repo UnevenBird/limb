@@ -1,4 +1,3 @@
-#include "glm/vec2.hpp"
 #include "math/wrap_vec2.h"
 
 extern "C" int w_newVec2(lua_State *L) {
@@ -14,7 +13,7 @@ extern "C" int w_newVec2(lua_State *L) {
 }
 
 static int w_set(lua_State *L) {
-	auto* vec = luax_checkuserdata<glm::vec2>(L, 1, "Vec2");
+	auto* vec = limb::math::luax_checkvec2(L, 1);
 	if (lua_istable(L, 2)) {
 		if (lua_objlen(L, 2) < 2) return luax_argcerror(L, 2);
 		
@@ -38,21 +37,21 @@ static int w_set(lua_State *L) {
 }
 
 static int w_get(lua_State *L) {
-	auto* vec = luax_checkuserdata<glm::vec2>(L, 1, "Vec2");
+	auto* vec = limb::math::luax_checkvec2(L, 1);
 	lua_pushnumber(L, vec->x);
 	lua_pushnumber(L, vec->y);
 	return 2;
 }
 
 static int w_gc(lua_State *L) {
-	auto* vec = luax_checkuserdata<glm::vec2>(L, 1, "Vec2");
+	auto* vec = limb::math::luax_checkvec2(L, 1);
 	using type = glm::vec2;
 	vec->~type();
 	return 0;
 }
 
 static int w_tostring(lua_State *L) {
-	auto* vec = luax_checkuserdata<glm::vec2>(L, 1, "Vec2");
+	auto* vec = limb::math::luax_checkvec2(L, 1);
 	lua_pushfstring(L, "Vec2 (%p)", vec);
 	return 1;
 }

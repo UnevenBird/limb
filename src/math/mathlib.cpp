@@ -1,5 +1,4 @@
 #include "math/mathlib.h"
-#include "glm/glm.hpp"
 #include <cmath>
 
 namespace limb {

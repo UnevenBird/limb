@@ -18,7 +18,7 @@ tl::expected<bool, std::string> Texture::Init(const std::string& str_path) {
 	if (!result) return tl::unexpected<std::string>("File not found: " + str_path);
 
 	std::filesystem::path image_path(str_path);
-	m_image_data = stbi_load(image_path.string().c_str(), &width, &height, &channels, 0);
+	m_image_data = stbi_load(image_path.string().c_str(), &m_width, &m_height, &m_channels, 0);
 	if (!m_image_data) {
 		const char* reason = stbi_failure_reason();
 		return tl::unexpected(std::string("Failed to load image: ") + (reason ? reason : "unknown error"));

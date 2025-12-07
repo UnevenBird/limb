@@ -1,9 +1,6 @@
 #ifndef LIMB_MATH_H
 #define LIMB_MATH_H
 
-#include "common/color.h"
-#include "graphics/shader.h"
-
 namespace limb {
 namespace math {
 

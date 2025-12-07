@@ -1,5 +1,8 @@
-#include "graphics/shader.h"
 #include "graphics/wrap_shader.h"
+#include "graphics/wrap_texture.h"
+#include "math/wrap_vec2.h"
+#include "math/wrap_vec3.h"
+#include "math/wrap_vec4.h"
 
 extern "C" int w_newShader(lua_State *L) {
 	std::string vertex_code = luax_checkstring(L, 1);
@@ -20,7 +23,7 @@ extern "C" int w_newShader(lua_State *L) {
 }
 
 static int w_send(lua_State *L) {
-	auto* shader = luax_checkuserdata<limb::graphics::Shader>(L, 1, "Shader");
+	auto* shader = limb::graphics::luax_checkshader(L, 1);
 	std::string uniform = luax_checkstring(L, 2);
 	int type = lua_type(L, 3);
 
@@ -33,16 +36,20 @@ static int w_send(lua_State *L) {
 		}
 		case LUA_TUSERDATA: {
 			if (luax_isuserdata(L, 3, "Vec2")) {
-				auto* vec = luax_checkuserdata<glm::vec2>(L, 3, "Vec2");
+				auto* vec = limb::math::luax_checkvec2(L, 3);
 				success = shader->SendUniform(uniform, *vec);
 			}
 			else if (luax_isuserdata(L, 3, "Vec3")) {
-				auto* vec = luax_checkuserdata<glm::vec3>(L, 3, "Vec3");
+				auto* vec = limb::math::luax_checkvec3(L, 3);
 				success = shader->SendUniform(uniform, *vec);
 			}
 			else if (luax_isuserdata(L, 3, "Vec4")) {
-				auto* vec = luax_checkuserdata<glm::vec4>(L, 3, "Vec4");
+				auto* vec = limb::math::luax_checkvec4(L, 3);
 				success = shader->SendUniform(uniform, *vec);
+			}
+			else if (luax_isuserdata(L, 3, "Texture")) {
+				auto* texture = limb::graphics::luax_checktexture(L, 3);
+				success = shader->SendUniform(uniform, *texture);
 			} else {
 				return luax_typerror(L, 3, "number or vector");
 			}
@@ -60,13 +67,13 @@ static int w_send(lua_State *L) {
 }
 
 static int w_gc(lua_State *L) {
-	auto* shader = luax_checkuserdata<limb::graphics::Shader>(L, 1, "Shader");
+	auto* shader = limb::graphics::luax_checkshader(L, 1);
 	shader->~Shader();
 	return 0;
 }
 
 static int w_tostring(lua_State *L) {
-	auto* shader = luax_checkuserdata<limb::graphics::Shader>(L, 1, "Shader");
+	auto* shader = limb::graphics::luax_checkshader(L, 1);
 	lua_pushfstring(L, "Shader (%p)", shader);
 	return 1;
 }
@@ -78,6 +85,7 @@ static const luaL_Reg functions[] = {
 	{ nullptr, nullptr }
 };
 
-extern "C" void luaopen_limb_Shader(lua_State* L) {
+extern "C" int luaopen_limb_Shader(lua_State* L) {
 	luax_register_type(L, "Shader", functions);
+	return 0;
 }

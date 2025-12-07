@@ -1,4 +1,3 @@
-#include "glm/vec3.hpp"
 #include "math/wrap_vec3.h"
 
 extern "C" int w_newVec3(lua_State *L) {
@@ -15,7 +14,7 @@ extern "C" int w_newVec3(lua_State *L) {
 }
 
 static int w_set(lua_State *L) {
-	auto* vec = luax_checkuserdata<glm::vec3>(L, 1, "Vec3");
+	auto* vec = limb::math::luax_checkvec3(L, 1);
 	if (lua_istable(L, 2)) {
 		if (lua_objlen(L, 2) < 3) return luax_argcerror(L, 3);
 		
@@ -41,7 +40,7 @@ static int w_set(lua_State *L) {
 }
 
 static int w_get(lua_State *L) {
-	auto* vec = luax_checkuserdata<glm::vec3>(L, 1, "Vec3");
+	auto* vec = limb::math::luax_checkvec3(L, 1);
 	lua_pushnumber(L, vec->x);
 	lua_pushnumber(L, vec->y);
 	lua_pushnumber(L, vec->z);
@@ -49,14 +48,14 @@ static int w_get(lua_State *L) {
 }
 
 static int w_gc(lua_State *L) {
-	auto* vec = luax_checkuserdata<glm::vec3>(L, 1, "Vec3");
+	auto* vec = limb::math::luax_checkvec3(L, 1);
 	using type = glm::vec3;
 	vec->~type();
 	return 0;
 }
 
 static int w_tostring(lua_State *L) {
-	auto* vec = luax_checkuserdata<glm::vec3>(L, 1, "Vec3");
+	auto* vec = limb::math::luax_checkvec3(L, 1);
 	lua_pushfstring(L, "Vec3 (%p)", vec);
 	return 1;
 }

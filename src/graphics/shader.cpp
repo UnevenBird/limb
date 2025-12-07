@@ -122,6 +122,10 @@ bool Shader::SendUniform(const std::string& name, const glm::vec4& vec) {
 	return true;
 }
 
+bool Shader::SendUniform(const std::string& name, const Texture& texture) {
+	return true;
+}
+
 GLuint Shader::GetProgram() const {
 	return m_program;
 }

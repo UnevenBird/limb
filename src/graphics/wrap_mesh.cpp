@@ -1,4 +1,3 @@
-#include "graphics/mesh.h"
 #include "graphics/wrap_mesh.h"
 
 #include <vector>
@@ -121,13 +120,13 @@ extern "C" int w_newMesh(lua_State *L) {
 }
 
 static int w_gc(lua_State *L) {
-	auto* mesh = luax_checkuserdata<limb::graphics::Mesh>(L, 1, "Mesh");
+	auto* mesh = limb::graphics::luax_checkmesh(L, 1);
 	mesh->~Mesh();
 	return 0;
 }
 
 static int w_tostring(lua_State *L) {
-	auto* mesh = luax_checkuserdata<limb::graphics::Mesh>(L, 1, "Mesh");
+	auto* mesh = limb::graphics::luax_checkmesh(L, 1);
 	lua_pushfstring(L, "Mesh (%p)", mesh);
 	return 1;
 }
@@ -138,6 +137,7 @@ static const luaL_Reg functions[] = {
 	{ nullptr, nullptr }
 };
 
-extern "C" void luaopen_limb_Mesh(lua_State* L) {
+extern "C" int luaopen_limb_Mesh(lua_State* L) {
 	luax_register_type(L, "Mesh", functions);
+	return 0;
 }

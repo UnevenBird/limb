@@ -1,11 +1,12 @@
 #include "luax.h"
 
-extern "C" void luax_register_type(lua_State* L, const char* name, const luaL_Reg* functions) {
+extern "C" int luax_register_type(lua_State* L, const char* name, const luaL_Reg* functions) {
 	luaL_newmetatable(L, name);
 	luax_setfuncs(L, functions);
 	lua_pushvalue(L, -1);
 	lua_setfield(L, -2, "__index");
 	lua_pop(L, 1);
+	return 0;
 }
 
 int luax_premakeglobal(lua_State* L, const char* k) {

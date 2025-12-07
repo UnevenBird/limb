@@ -1,4 +1,3 @@
-#include "graphics/texture.h"
 #include "graphics/wrap_texture.h"
 
 extern "C" int w_newTexture(lua_State *L) {
@@ -19,20 +18,20 @@ extern "C" int w_newTexture(lua_State *L) {
 }
 
 static int w_getDimensions(lua_State *L) {
-	auto* texture = luax_checkuserdata<limb::graphics::Texture>(L, 1, "Texture");
+	auto* texture = limb::graphics::luax_checktexture(L, 1);
 	lua_pushinteger(L, texture->GetWidth());
 	lua_pushinteger(L, texture->GetHeight());
 	return 2;
 }
 
 static int w_gc(lua_State *L) {
-	auto* texture = luax_checkuserdata<limb::graphics::Texture>(L, 1, "Texture");
+	auto* texture = limb::graphics::luax_checktexture(L, 1);
 	texture->~Texture();
 	return 0;
 }
 
 static int w_tostring(lua_State *L) {
-	auto* texture = luax_checkuserdata<limb::graphics::Texture>(L, 1, "Texture");
+	auto* texture = limb::graphics::luax_checktexture(L, 1);
 	lua_pushfstring(L, "Texture (%p)", texture);
 	return 1;
 }
@@ -44,6 +43,7 @@ static const luaL_Reg functions[] = {
 	{ nullptr, nullptr }
 };
 
-extern "C" void luaopen_limb_Texture(lua_State* L) {
+extern "C" int luaopen_limb_Texture(lua_State* L) {
 	luax_register_type(L, "Texture", functions);
+	return 0;
 }
